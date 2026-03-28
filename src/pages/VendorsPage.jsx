@@ -1,16 +1,82 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from '../components/ui/Card';
+import VendorTable from '../components/vendors/VendorTable';
+import AddVendorForm from '../components/vendors/AddVendorForm';
+import EditVendorForm from '../components/vendors/EditVendorForm';
+import Button from '../components/ui/Button';
 
 const VendorsPage = () => {
+  const [vendors, setVendors] = useState([
+    { id: 1, name: 'TechCorp Solutions', category: 'IT Services', contact: 'billing@techcorp.com', status: 'Active' },
+    { id: 2, name: 'Global Logistics Inc.', category: 'Logistics', contact: 'vendors@globallogistics.com', status: 'Inactive' }
+  ]);
+  const [viewState, setViewState] = useState('list'); // 'list', 'add', 'edit'
+  const [editingVendor, setEditingVendor] = useState(null);
+
+  const handleAddVendor = (vendor) => {
+    setVendors([...vendors, vendor]);
+    setViewState('list');
+  };
+
+  const handleUpdateVendor = (updatedVendor) => {
+    setVendors(vendors.map(v => v.id === updatedVendor.id ? updatedVendor : v));
+    setViewState('list');
+    setEditingVendor(null);
+  };
+
+  const handleToggleStatus = (id) => {
+    setVendors(vendors.map(v => {
+      if (v.id === id) {
+        return { ...v, status: v.status === 'Active' ? 'Inactive' : 'Active' };
+      }
+      return v;
+    }));
+  };
+
+  const handleEditClick = (vendor) => {
+    setEditingVendor(vendor);
+    setViewState('edit');
+  };
+
   return (
     <div className="page-container">
-      <div className="page-header">
-        <h2 className="page-title">Vendors</h2>
-        <p className="page-subtitle">Manage your vendors here</p>
+      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div>
+          <h2 className="page-title">Vendors</h2>
+          <p className="page-subtitle">Manage your suppliers and vendors</p>
+        </div>
+        {viewState === 'list' && (
+          <Button onClick={() => setViewState('add')}>+ Add Vendor</Button>
+        )}
       </div>
-      <Card>
-        <p>Vendor table will go here</p>
-      </Card>
+
+      {viewState === 'list' && (
+        <Card>
+          <VendorTable 
+            vendors={vendors} 
+            onEdit={handleEditClick} 
+            onToggleStatus={handleToggleStatus} 
+          />
+        </Card>
+      )}
+
+      {viewState === 'add' && (
+        <AddVendorForm 
+          onAdd={handleAddVendor} 
+          onCancel={() => setViewState('list')} 
+        />
+      )}
+
+      {viewState === 'edit' && editingVendor && (
+        <EditVendorForm 
+          vendor={editingVendor} 
+          onUpdate={handleUpdateVendor} 
+          onCancel={() => {
+            setViewState('list');
+            setEditingVendor(null);
+          }} 
+        />
+      )}
     </div>
   );
 };
