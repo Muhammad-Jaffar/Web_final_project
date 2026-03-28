@@ -11,7 +11,7 @@ const Footer = () => {
           <span>|</span>
           <a href="#">Terms of Service</a>
           <span>|</span>
-          <a href="#">Help</a>
+          <a href="#">Support</a>
         </div>
       </div>
     </footer>
