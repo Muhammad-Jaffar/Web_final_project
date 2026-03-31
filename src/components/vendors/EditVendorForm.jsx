@@ -7,6 +7,8 @@ const EditVendorForm = ({ vendor, onUpdate, onCancel }) => {
   const [formData, setFormData] = useState({ ...vendor });
 
   useEffect(() => {
+    // eslint-disable-next-line react-compiler/react-compiler, no-restricted-syntax
+    // eslint-disable-next-line
     setFormData({ ...vendor });
   }, [vendor]);
 

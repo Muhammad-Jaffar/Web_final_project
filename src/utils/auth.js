@@ -24,7 +24,7 @@ export const getCurrentUser = () => {
   if (!token) return null;
   try {
     return JSON.parse(atob(token));
-  } catch (e) {
+  } catch {
     return null;
   }
 };
