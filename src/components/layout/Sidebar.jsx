@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Users, FileText, CreditCard } from 'lucide-react';
+import { LayoutDashboard, Users, FileText, CreditCard, BarChart2 } from 'lucide-react';
 import './Sidebar.css';
 
 const Sidebar = () => {
@@ -30,6 +30,12 @@ const Sidebar = () => {
           <NavLink to="/payments" className="nav-link">
             <CreditCard size={20} />
             <span>Payments</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/reports" className="nav-link">
+            <BarChart2 size={20} />
+            <span>Reports</span>
           </NavLink>
         </li>
       </ul>

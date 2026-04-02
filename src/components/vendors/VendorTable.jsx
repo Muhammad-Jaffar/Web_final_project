@@ -1,6 +1,6 @@
 import React from 'react';
 
-const VendorTable = ({ vendors, onEdit, onToggleStatus }) => {
+const VendorTable = ({ vendors, onEdit, onToggleStatus, onRate }) => {
   return (
     <div style={{ overflowX: 'auto' }}>
       <table style={{ width: '100%', borderCollapse: 'collapse', backgroundColor: 'white', border: '1px solid #ddd' }}>
@@ -31,6 +31,12 @@ const VendorTable = ({ vendors, onEdit, onToggleStatus }) => {
                 </span>
               </td>
               <td style={{ padding: '12px', textAlign: 'center' }}>
+                <button 
+                  onClick={() => onRate(vendor)} 
+                  style={{ marginRight: '10px', padding: '6px 10px', cursor: 'pointer', backgroundColor: '#3b82f6', color: 'white', border: 'none', borderRadius: '4px' }}
+                >
+                  Rate
+                </button>
                 <button 
                   onClick={() => onEdit(vendor)} 
                   style={{ marginRight: '10px', padding: '6px 10px', cursor: 'pointer', backgroundColor: '#ffc107', color: 'black', border: 'none', borderRadius: '4px' }}

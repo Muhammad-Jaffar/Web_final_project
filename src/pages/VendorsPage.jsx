@@ -3,6 +3,7 @@ import Card from '../components/ui/Card';
 import VendorTable from '../components/vendors/VendorTable';
 import AddVendorForm from '../components/vendors/AddVendorForm';
 import EditVendorForm from '../components/vendors/EditVendorForm';
+import VendorRatingForm from '../components/vendors/VendorRatingForm';
 import Button from '../components/ui/Button';
 
 const VendorsPage = () => {
@@ -10,8 +11,8 @@ const VendorsPage = () => {
     { id: 1, name: 'TechCorp Solutions', category: 'IT Services', contact: 'billing@techcorp.com', status: 'Active' },
     { id: 2, name: 'Global Logistics Inc.', category: 'Logistics', contact: 'vendors@globallogistics.com', status: 'Inactive' }
   ]);
-  const [viewState, setViewState] = useState('list'); // 'list', 'add', 'edit'
-  const [editingVendor, setEditingVendor] = useState(null);
+  const [viewState, setViewState] = useState('list'); // 'list', 'add', 'edit', 'rate'
+  const [selectedVendor, setSelectedVendor] = useState(null);
 
   const handleAddVendor = (vendor) => {
     setVendors([...vendors, vendor]);
@@ -21,7 +22,7 @@ const VendorsPage = () => {
   const handleUpdateVendor = (updatedVendor) => {
     setVendors(vendors.map(v => v.id === updatedVendor.id ? updatedVendor : v));
     setViewState('list');
-    setEditingVendor(null);
+    setSelectedVendor(null);
   };
 
   const handleToggleStatus = (id) => {
@@ -34,8 +35,19 @@ const VendorsPage = () => {
   };
 
   const handleEditClick = (vendor) => {
-    setEditingVendor(vendor);
+    setSelectedVendor(vendor);
     setViewState('edit');
+  };
+
+  const handleRateClick = (vendor) => {
+    setSelectedVendor(vendor);
+    setViewState('rate');
+  };
+
+  const handleRatingSubmit = (ratingData) => {
+    alert(`Rating submitted for Vendor ${ratingData.vendorId}: ${ratingData.rating} stars!`);
+    setViewState('list');
+    setSelectedVendor(null);
   };
 
   return (
@@ -56,6 +68,7 @@ const VendorsPage = () => {
             vendors={vendors} 
             onEdit={handleEditClick} 
             onToggleStatus={handleToggleStatus} 
+            onRate={handleRateClick}
           />
         </Card>
       )}
@@ -67,13 +80,24 @@ const VendorsPage = () => {
         />
       )}
 
-      {viewState === 'edit' && editingVendor && (
+      {viewState === 'edit' && selectedVendor && (
         <EditVendorForm 
-          vendor={editingVendor} 
+          vendor={selectedVendor} 
           onUpdate={handleUpdateVendor} 
           onCancel={() => {
             setViewState('list');
-            setEditingVendor(null);
+            setSelectedVendor(null);
+          }} 
+        />
+      )}
+
+      {viewState === 'rate' && selectedVendor && (
+        <VendorRatingForm 
+          vendor={selectedVendor} 
+          onSubmit={handleRatingSubmit} 
+          onCancel={() => {
+            setViewState('list');
+            setSelectedVendor(null);
           }} 
         />
       )}
