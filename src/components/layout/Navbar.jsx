@@ -18,7 +18,7 @@ const Navbar = () => {
         <h2>Vendor Management System</h2>
       </div>
       <div className="navbar-right">
-        <span className="welcome-text">Welcome, {user?.name || 'User'}</span>
+        <span className="welcome-text">Hello, {user?.name || 'Admin'}</span>
         <button className="logout-btn" onClick={handleLogout}>Logout</button>
       </div>
     </header>

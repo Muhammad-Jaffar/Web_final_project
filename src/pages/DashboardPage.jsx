@@ -5,7 +5,7 @@ const DashboardPage = () => {
     <div className="page-container">
       <div className="page-header">
         <h2 className="page-title">Dashboard</h2>
-        <p className="page-subtitle">Overview of the system</p>
+        <p className="page-subtitle">System Overview Dashboard</p>
       </div>
       
       <div className="metrics-grid">
